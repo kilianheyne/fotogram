@@ -44,7 +44,45 @@ main{
     color: white;
     text-align: center;
     background: #051721;
+
+    #pictureContent{
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 10rem;
+        padding-bottom: 10rem;
+        
+        img{
+            width: 20%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 1.6rem;
+            transition: all 150ms ease-in-out;
+        }
+
+        img:hover{
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+    }
+
+    #pictureContent:has(img:hover) img:not(:hover){ 
+        filter: blur(0.4rem);                       
+    }
 }
+
+/* 
+:has ist eine Pseudo-Klasse, 
+aber noch relativ neu, und kann ggf. von älteren Browser-Versionen nicht unterstützt werden;
+ist hier nötig, um auch die anderen Bilder anzusprechen und nicht nur das gehoverte Bild
+
+:has(img:hover)
+wird ein <img> gehovert, dann soll etwas passieren (in diesem Fall nichts)
+
+img:not(:hover)
+<img> die gerade nicht gehovert werden bekommen den Effekt aus der geschweiften Klammer (also eine Blur)
+*/
 
 footer{
     height: 11.2rem;
