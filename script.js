@@ -1,13 +1,4 @@
-// Aufgaben für Fotogram
-
-// 1. Bilder über JavaScript integrieren (siehe Checkliste)
-//  1.1. Bilder bei Pixabay heraussuchen
-//  1.2. Bilder als Array hinterlegen (hierfür das Terminal nutzen)
-//  1.3. Am besten lädt die Bilder-Funktion als onload-Event
-// 2. erstellte Bilder mit einem Hover-Effekt versehen 
-// 3. Bildern ein Klick-Event verleihen, dass ein Overlay einblendet 
-// 4. Bilder in einem Array anordnen, sodass die Pfeile rechts und links genutzt werden können
-// 5. Ein Klick außerhalb des Overlays, oder auf einen X-Button schließt das Overlay
+let singlePictureRef = document.getElementById('singlePictureContent');
 
 const italyVacation = [
     'focaccia-3771454_1280.jpg',
@@ -22,19 +13,75 @@ const italyVacation = [
     'sorrento-2331766_1280.jpg',
     'sorrento-2579576_1280.jpg',
     'window-779552_1280.jpg',
-]
+];
 
 function renderPictures(){
-    console.log('renderPictures() wurde aufgerufen!')
-    let idRef = document.getElementById('pictureContent');
+    let galleryRef = document.getElementById('pictureContent');
     
     for(index = 0; index < italyVacation.length; index++){
-        idRef.innerHTML += getSinglePictures(index);
+        galleryRef.innerHTML += getSinglePictures(index);
     }
-    console.log(idRef);
 }
 
 function getSinglePictures(index){   //HTML und JS immer voneinander "trennen" - mehr Übersichtlichkeit, besser lesbar
-    return `<img src="./imgs/${italyVacation[index]}" class="singlePicture">`
+    return `<img src="./imgs/${italyVacation[index]}" 
+            class="singlePicture" 
+            onclick="toggleOverlay(${index})">`
 }
 
+function toggleOverlay(index){
+    let refOverlay = document.getElementById('overlay');
+
+    refOverlay.style.zIndex = "1";
+    refOverlay.classList.remove('d_none');
+    refOverlay.classList.add('d_yes');
+
+    singlePictureRef.innerHTML = insertOnePicture(index);
+
+}
+
+function insertOnePicture(index){
+    return `<div id="toTheLeft" class="navigationButton" onclick="moveToTheLeft(${index})">&lang;</div>
+            <img src="./imgs/${italyVacation[index]}">
+            <div id="toTheRight" class="navigationButton" onclick="moveToTheRight(${index})">&rang;</div>`;
+}
+
+function insertNextPicture(index){
+    singlePictureRef.innerHTML = `<div id="toTheLeft" class="navigationButton" onclick="moveToTheLeft(${index})">&lang;</div>
+            <img src="./imgs/${italyVacation[index]}">
+            <div id="toTheRight" class="navigationButton" onclick="moveToTheRight(${index})">&rang;</div>`;
+}
+
+function insertPreviousPicture(index){
+    singlePictureRef.innerHTML = `<div id="toTheLeft" class="navigationButton" onclick="moveToTheLeft(${index})">&lang;</div>
+            <img src="./imgs/${italyVacation[index]}">
+            <div id="toTheRight" class="navigationButton" onclick="moveToTheRight(${index})">&rang;</div>`;
+}
+
+function closeOverlay(){
+    let closeRef = document.getElementById('overlay');
+    closeRef.style.zIndex = "0";
+    closeRef.classList.add('d_none');
+    closeRef.classList.remove('d_yes');
+}
+
+function moveToTheRight(index){
+    
+    let rightIndex = index + 1;
+
+    if (rightIndex >= italyVacation.length){
+        rightIndex = 0;
+    }
+
+    insertNextPicture(rightIndex);
+}
+
+function moveToTheLeft(index){
+    let leftIndex = index - 1;
+
+    if (leftIndex <= 0){
+        leftIndex = 11;
+    }
+
+    insertPreviousPicture(leftIndex);
+}

@@ -9,10 +9,14 @@
     <link rel="shortcut icon" href="img/favicon.svg" type="image/x-icon">
 </head>
 <body onload="renderPictures()">
+    <div id="overlay" class="d_none">
+        <div onclick="closeOverlay()" id="closingButton" class="navigationButton">&times;</div>
+        <div id="singlePictureContent"></div>
+    </div>
     <header>
         <img src="./img/Fotogram_Logo.svg" alt="Fotogram-Logo">
     </header>
-    <main >
+    <main>
         <h2>Dein persönliches Fotoalbum 📸</h2>
         <div id="pictureContent">
 
